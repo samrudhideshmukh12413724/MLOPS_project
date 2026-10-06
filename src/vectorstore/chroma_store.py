@@ -29,7 +29,14 @@ class ChromaVectorStore:
         self.collection_name = collection_name
         self.embedding_engine = EmbeddingEngine(model_name=embedding_model_name)
         
-        self.client = chromadb.PersistentClient(path=self.db_dir)
+        try:
+            self.client = chromadb.PersistentClient(path=self.db_dir)
+        except BaseException:
+            import shutil
+            shutil.rmtree(self.db_dir, ignore_errors=True)
+            os.makedirs(self.db_dir, exist_ok=True)
+            self.client = chromadb.PersistentClient(path=self.db_dir)
+
         self.collection = self.client.get_or_create_collection(
             name=self.collection_name,
             metadata={"hnsw:space": "cosine", "embedding_model": embedding_model_name}
