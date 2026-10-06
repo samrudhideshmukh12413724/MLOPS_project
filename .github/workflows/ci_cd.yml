@@ -1,4 +1,4 @@
-name: RAGOps Enterprise Knowledge Assistant CI/CD Pipeline
+name: MLOPS_Pipeline
 
 "on":
   push:
