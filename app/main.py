@@ -25,6 +25,10 @@ from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTEN
 from src.config import MLFLOW_TRACKING_URI
 import mlflow
 mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+try:
+    mlflow.set_experiment("RAGOps_Retrieval_Experiments")
+except Exception:
+    pass
 
 from src.retrieval.retrieval_manager import RetrievalManager
 from src.generation.rag_generator import RAGGenerator

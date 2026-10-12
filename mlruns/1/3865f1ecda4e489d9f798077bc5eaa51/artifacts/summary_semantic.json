@@ -1,0 +1,15 @@
+{
+  "retrieval_method": "semantic",
+  "metrics": {
+    "recall@3": 0.95,
+    "precision@3": 0.8,
+    "mrr": 0.95,
+    "mean_latency_sec": 0.045
+  },
+  "params": {
+    "chunk_size": 400,
+    "chunk_overlap": 80,
+    "embedding_model": "all-MiniLM-L6-v2"
+  },
+  "timestamp": "2026-10-06T11:34:21.231275"
+}

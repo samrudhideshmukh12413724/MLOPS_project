@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/MLOPS_project/mlruns/512611259025501629/e88dc1cd22c44700b82512195d7edf1e/artifacts
+end_time: 1791272416063
+entry_point_name: ''
+experiment_id: '512611259025501629'
+lifecycle_stage: active
+run_id: e88dc1cd22c44700b82512195d7edf1e
+run_name: run_bm25
+run_uuid: e88dc1cd22c44700b82512195d7edf1e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1791272414829
+status: 3
+tags: []
+user_id: deshm

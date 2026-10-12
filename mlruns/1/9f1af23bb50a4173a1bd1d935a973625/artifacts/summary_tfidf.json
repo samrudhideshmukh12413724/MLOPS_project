@@ -1,0 +1,29 @@
+{
+  "retrieval_method": "tfidf",
+  "metrics": {
+    "recall@1": 0.8333,
+    "precision@1": 0.9444,
+    "mrr@1": 0.9444,
+    "recall@3": 0.9722,
+    "precision@3": 0.7407,
+    "mrr@3": 0.9722,
+    "recall@5": 0.9722,
+    "precision@5": 0.5333,
+    "mrr@5": 0.9722,
+    "mrr": 0.9722,
+    "mean_latency_sec": 0.003048,
+    "p95_latency_sec": 0.005579,
+    "mean_context_relevance": 0.1732
+  },
+  "params": {
+    "retrieval_method": "tfidf",
+    "chunk_size": 400,
+    "chunk_overlap": 80,
+    "top_k": 3,
+    "dataset_version": "27_docs_v1",
+    "total_questions": 20,
+    "embedding_model": "none",
+    "tokenization": "ngram_1_2"
+  },
+  "timestamp": "2026-10-06T11:38:59.527737"
+}

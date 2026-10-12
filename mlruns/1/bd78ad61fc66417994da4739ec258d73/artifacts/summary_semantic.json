@@ -1,0 +1,11 @@
+{
+  "retrieval_method": "semantic",
+  "metrics": {
+    "recall@3": 0.95,
+    "mrr": 0.95
+  },
+  "params": {
+    "chunk_size": 400
+  },
+  "timestamp": "2026-10-06T11:34:21.990315"
+}

@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1791778392692
+current_stage: None
+description: Champion retrieval configuration using SEMANTIC
+last_updated_timestamp: 1791778392692
+name: RAGOps_Retrieval_Champion
+run_id: 0c2fecbc071a4ca992bb77201e56b6fd
+run_link: null
+source: runs:/0c2fecbc071a4ca992bb77201e56b6fd/summary_semantic.json
+status: READY
+status_message: null
+storage_location: runs:/0c2fecbc071a4ca992bb77201e56b6fd/summary_semantic.json
+user_id: null
+version: 3

@@ -1,0 +1,29 @@
+{
+  "retrieval_method": "bm25",
+  "metrics": {
+    "recall@1": 0.7778,
+    "precision@1": 0.8889,
+    "mrr@1": 0.8889,
+    "recall@3": 0.9722,
+    "precision@3": 0.7222,
+    "mrr@3": 0.9352,
+    "recall@5": 0.9722,
+    "precision@5": 0.5444,
+    "mrr@5": 0.9352,
+    "mrr": 0.9352,
+    "mean_latency_sec": 0.000496,
+    "p95_latency_sec": 0.001029,
+    "mean_context_relevance": 0.6481
+  },
+  "params": {
+    "retrieval_method": "bm25",
+    "chunk_size": 400,
+    "chunk_overlap": 80,
+    "top_k": 3,
+    "dataset_version": "27_docs_v1",
+    "total_questions": 20,
+    "embedding_model": "none",
+    "tokenization": "word_regex"
+  },
+  "timestamp": "2026-10-05T10:47:59.428264"
+}

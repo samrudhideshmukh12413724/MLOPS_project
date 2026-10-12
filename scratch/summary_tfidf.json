@@ -11,8 +11,8 @@
     "precision@5": 0.5333,
     "mrr@5": 0.9722,
     "mrr": 0.9722,
-    "mean_latency_sec": 0.002277,
-    "p95_latency_sec": 0.003993,
+    "mean_latency_sec": 0.006236,
+    "p95_latency_sec": 0.012565,
     "mean_context_relevance": 0.1732
   },
   "params": {
@@ -25,5 +25,5 @@
     "embedding_model": "none",
     "tokenization": "ngram_1_2"
   },
-  "timestamp": "2026-10-05T00:51:51.925761"
+  "timestamp": "2026-10-12T20:12:32.093236"
 }
