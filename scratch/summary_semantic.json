@@ -11,8 +11,8 @@
     "precision@5": 0.5556,
     "mrr@5": 0.9722,
     "mrr": 0.9722,
-    "mean_latency_sec": 0.130137,
-    "p95_latency_sec": 0.256518,
+    "mean_latency_sec": 0.046405,
+    "p95_latency_sec": 0.054201,
     "mean_context_relevance": 0.5202
   },
   "params": {
@@ -25,5 +25,5 @@
     "embedding_model": "all-MiniLM-L6-v2",
     "vector_store": "ChromaDB"
   },
-  "timestamp": "2026-10-12T20:12:40.155859"
+  "timestamp": "2026-10-16T13:07:34.868467"
 }

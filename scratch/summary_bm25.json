@@ -11,8 +11,8 @@
     "precision@5": 0.5444,
     "mrr@5": 0.9352,
     "mrr": 0.9352,
-    "mean_latency_sec": 0.004378,
-    "p95_latency_sec": 0.008954,
+    "mean_latency_sec": 0.000939,
+    "p95_latency_sec": 0.001041,
     "mean_context_relevance": 0.6481
   },
   "params": {
@@ -25,5 +25,5 @@
     "embedding_model": "none",
     "tokenization": "word_regex"
   },
-  "timestamp": "2026-10-12T20:12:34.556079"
+  "timestamp": "2026-10-16T13:07:32.950342"
 }
