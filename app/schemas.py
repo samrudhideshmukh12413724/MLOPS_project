@@ -11,6 +11,7 @@ class QueryRequest(BaseModel):
     user_role: str = Field(default="employee", description="User security role: intern, employee, manager, executive, security_admin")
     top_k: int = Field(default=3, ge=1, le=10, description="Top-K context chunks to retrieve")
     retrieval_method: str = Field(default="semantic", description="Retrieval method: tfidf, bm25, or semantic")
+    language: str = Field(default="en", description="Language code: en, hi, es, fr, de")
 
     @field_validator("query")
     @classmethod
@@ -58,6 +59,7 @@ class QueryResponse(BaseModel):
     document_version: str
     application_version: str
     llm_provider: str
+    language: str = "en"
 
 
 class HealthResponse(BaseModel):

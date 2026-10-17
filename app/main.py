@@ -33,6 +33,7 @@ except Exception:
 from src.retrieval.retrieval_manager import RetrievalManager
 from src.generation.rag_generator import RAGGenerator
 from src.evaluation.rag_evaluator import RAGEvaluator
+from src.utils.translator import translate_text, LANGUAGE_NAMES
 from app.schemas import (
     QueryRequest,
     QueryResponse,
@@ -220,18 +221,31 @@ def get_version():
 
 @app.post("/ask", tags=["RAG Assistant"])
 def ask_rag(payload: Dict[str, Any]):
-    """Compatibility endpoint for interactive frontend UI (/ask)."""
+    """Compatibility endpoint for interactive frontend UI (/ask) with multilingual support."""
     query_text = payload.get("query") or payload.get("question") or ""
-    language = payload.get("language", "en")
+    language = (payload.get("language") or "en").lower().strip()
     top_k = int(payload.get("top_k", 3))
     
     if not query_text.strip():
         raise HTTPException(status_code=422, detail="Query text cannot be empty.")
         
     start_time = time.time()
+    
+    # 1. Translate query to English if non-English for accurate retrieval against enterprise docs
+    retrieval_query = query_text
+    if language != "en":
+        retrieval_query = translate_text(query_text, source_lang=language, target_lang="en")
+        logger.info(f"Cross-lingual query translation ({language} -> en): '{query_text}' -> '{retrieval_query}'")
+
     generator = get_rag_generator()
-    res = generator.generate_response(query=query_text, user_role="employee", top_k=top_k)
+    res = generator.generate_response(query=retrieval_query, user_role="employee", top_k=top_k)
     elapsed = time.time() - start_time
+    
+    # 2. Translate answer back to requested language while preserving citations
+    raw_answer = res.get("answer", "No answer generated.")
+    final_answer = raw_answer
+    if language != "en" and raw_answer:
+        final_answer = translate_text(raw_answer, source_lang="en", target_lang=language)
     
     retrieved_sources = [
         {
@@ -252,7 +266,7 @@ def ask_rag(payload: Dict[str, Any]):
     ]
     
     return {
-        "generated_answer": res.get("answer", "No answer generated."),
+        "generated_answer": final_answer,
         "latency_ms": round(elapsed * 1000, 1),
         "confidence_score": 0.95,
         "model_version": "EnterpriseRAGAssistant (v18)",
@@ -264,20 +278,33 @@ def ask_rag(payload: Dict[str, Any]):
 
 @app.post("/query", response_model=QueryResponse, tags=["RAG Assistant"])
 def query_rag(request: QueryRequest):
-    """Processes natural language query using RBAC-filtered retrieval & citation generation."""
+    """Processes natural language query using RBAC-filtered retrieval & citation generation with multilingual support."""
     start_time = time.time()
     try:
         generator = get_rag_generator()
+        language = (request.language or "en").lower().strip()
+        
+        # 1. Translate query to English if non-English
+        retrieval_query = request.query
+        if language != "en":
+            retrieval_query = translate_text(request.query, source_lang=language, target_lang="en")
+            logger.info(f"Cross-lingual query translation ({language} -> en): '{request.query}' -> '{retrieval_query}'")
         
         # Execute RAG generation pipeline
         res = generator.generate_response(
-            query=request.query,
+            query=retrieval_query,
             user_role=request.user_role,
             retrieval_method=request.retrieval_method,
             top_k=request.top_k,
         )
 
         elapsed = time.time() - start_time
+        
+        # Translate answer back to requested language
+        raw_answer = res["answer"]
+        final_answer = raw_answer
+        if language != "en" and raw_answer:
+            final_answer = translate_text(raw_answer, source_lang="en", target_lang=language)
         
         # Record Prometheus metrics
         QUERY_LATENCY_HISTOGRAM.labels(retrieval_method=request.retrieval_method).observe(elapsed)
@@ -299,9 +326,9 @@ def query_rag(request: QueryRequest):
         ]
 
         return QueryResponse(
-            query=res["query"],
+            query=request.query,
             user_role=request.user_role,
-            answer=res["answer"],
+            answer=final_answer,
             citations=res["citations"],
             retrieved_documents=retrieved_docs_schema,
             retrieval_latency=res["retrieval_latency"],
@@ -312,6 +339,7 @@ def query_rag(request: QueryRequest):
             document_version=res["document_version"],
             application_version=res["application_version"],
             llm_provider=res["llm_provider"],
+            language=language,
         )
 
     except Exception as e:
