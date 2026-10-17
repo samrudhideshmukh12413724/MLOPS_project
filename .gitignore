@@ -41,3 +41,6 @@ test-results.xml
 # Operating System
 .DS_Store
 Thumbs.db
+
+# Temporary scratch folder
+scratch/
